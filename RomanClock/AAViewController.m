@@ -7,23 +7,47 @@
 //
 
 #import "AAViewController.h"
+#import "QuartzCore/QuartzCore.h"
+#import "AAClockHandsView.h"
 
 @interface AAViewController ()
-
+@property (strong, nonatomic)CADisplayLink *displayLink;
 @end
 
 @implementation AAViewController
 
+- (void)tick: (CADisplayLink *)sender
+{
+    NSCalendar *cal = [ [NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *now = [NSDate date];
+    NSDateComponents *dateComps = [cal components:NSSecondCalendarUnit fromDate:now];
+    
+    NSLog(@"seconds: %i", [dateComps second]);
+    [self drawHourHandForDegree:-[dateComps second]];
+}
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	// Do any additional setup after loading the view.
+    NSLog(@"hello world");
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick:)];
+    self.displayLink.frameInterval = 30;
+    [self.displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)viewDidDisappear:(BOOL)animated
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [super viewDidDisappear:animated];
+    [self.displayLink invalidate];
+    self.displayLink = nil;
 }
+
 
 @end

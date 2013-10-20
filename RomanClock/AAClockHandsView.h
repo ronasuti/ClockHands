@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface AAClockHandsView : UIView
+
+-(void)drawHourHandForDegree:(CGFloat)degree;
 
 @end

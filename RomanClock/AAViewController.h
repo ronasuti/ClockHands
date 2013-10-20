@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "AAClockHandsView.h"
 @interface AAViewController : UIViewController
 
+- (void)tick: (CADisplayLink *)sender;
 @end

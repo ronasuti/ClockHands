@@ -14,7 +14,8 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    [self drawHourHandForDegree:180];
+    //make that clock hand move!
+
 }
 
 - (void)drawHourHandForDegree:(CGFloat)degree
